@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	csvFile, err := os.OpenFile("example.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
+	csvFile, err := os.OpenFile("example.csv", os.O_RDWR, os.ModePerm)
 	if err != nil {
 		log.Fatalf("Failed to open CSV file: %v", err)
 	}
