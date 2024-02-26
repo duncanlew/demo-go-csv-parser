@@ -32,4 +32,6 @@ func main() {
 	for _, article := range articles {
 		log.Printf("Title: %s, URL: %s", article.Title, article.URL)
 	}
+
+	// TODO: next step, create articlesThatAreUnread
 }
