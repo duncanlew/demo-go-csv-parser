@@ -17,14 +17,13 @@ type Article struct {
 }
 
 func main() {
-	csvFile, err := os.OpenFile("example.csv", os.O_RDWR, os.ModePerm)
-	if err != nil {
-		log.Fatalf("Failed to open CSV file: %v", err)
+	csvFile, csvFileError := os.OpenFile("example.csv", os.O_RDWR, os.ModePerm)
+	if csvFileError != nil {
+		panic(csvFileError)
 	}
 	defer csvFile.Close()
 
 	var articles []*Article
-
 	if err := gocsv.UnmarshalFile(csvFile, &articles); err != nil {
 		panic(err)
 	}
@@ -33,5 +32,13 @@ func main() {
 		log.Printf("Title: %s, URL: %s", article.Title, article.URL)
 	}
 
-	// TODO: next step, create articlesThatAreUnread
+	resultFile, resultFileError := os.OpenFile("result.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
+	if resultFileError != nil {
+		panic(resultFileError)
+	}
+	defer resultFile.Close()
+
+	if err := gocsv.MarshalFile(&articles, resultFile); resultFileError != nil {
+		panic(err)
+	}
 }
