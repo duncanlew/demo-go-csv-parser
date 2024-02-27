@@ -32,13 +32,20 @@ func main() {
 		log.Printf("Title: %s, URL: %s", article.Title, article.URL)
 	}
 
+	var filteredArticles []*Article
+	for _, article := range articles {
+		if article.Location == "inbox" {
+			filteredArticles = append(filteredArticles, article)
+		}
+	}
+
 	resultFile, resultFileError := os.OpenFile("result.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
 	if resultFileError != nil {
 		panic(resultFileError)
 	}
 	defer resultFile.Close()
 
-	if err := gocsv.MarshalFile(&articles, resultFile); resultFileError != nil {
+	if err := gocsv.MarshalFile(&filteredArticles, resultFile); resultFileError != nil {
 		panic(err)
 	}
 }
