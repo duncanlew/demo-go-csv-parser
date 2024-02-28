@@ -17,9 +17,9 @@ type Article struct {
 }
 
 func main() {
-	articles, error := ReadCsv()
-	if error != nil {
-		panic(error)
+	articles, readCsvError := ReadCsv()
+	if readCsvError != nil {
+		panic(readCsvError)
 	}
 
 	var filteredArticles []*Article
@@ -29,15 +29,11 @@ func main() {
 		}
 	}
 
-	resultFile, resultFileError := os.OpenFile("result.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
-	if resultFileError != nil {
-		panic(resultFileError)
+	writeCsvError := WriteCsv(filteredArticles)
+	if writeCsvError != nil {
+		panic(readCsvError)
 	}
-	defer resultFile.Close()
 
-	if err := gocsv.MarshalFile(&filteredArticles, resultFile); resultFileError != nil {
-		panic(err)
-	}
 }
 
 func ReadCsv() ([]*Article, error) {
@@ -52,9 +48,24 @@ func ReadCsv() ([]*Article, error) {
 		return nil, unmarshalError
 	}
 
+	// TODO: remove this output
 	for _, article := range articles {
 		log.Printf("Title: %s, URL: %s", article.Title, article.URL)
 	}
 
 	return articles, nil
+}
+
+func WriteCsv(articles []*Article) error {
+	resultFile, resultFileError := os.OpenFile("result.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
+	if resultFileError != nil {
+		return resultFileError
+	}
+	defer resultFile.Close()
+
+	if marshalFileError := gocsv.MarshalFile(&articles, resultFile); marshalFileError != nil {
+		return marshalFileError
+	}
+
+	return nil
 }
