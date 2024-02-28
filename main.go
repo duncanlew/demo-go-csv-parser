@@ -17,11 +17,13 @@ type Article struct {
 }
 
 func main() {
+	// TODO move the panic into ReadCsv
 	articles, readCsvError := ReadCsv()
 	if readCsvError != nil {
 		panic(readCsvError)
 	}
 
+	// TODO extract into separate method
 	var filteredArticles []*Article
 	for _, article := range articles {
 		if article.Location == "inbox" {
@@ -29,6 +31,7 @@ func main() {
 		}
 	}
 
+	// TODO move the panic into WriteCSV
 	writeCsvError := WriteCsv(filteredArticles)
 	if writeCsvError != nil {
 		panic(readCsvError)
@@ -36,6 +39,7 @@ func main() {
 
 }
 
+// TODO What is the *. Pointers??
 func ReadCsv() ([]*Article, error) {
 	csvFile, csvFileError := os.OpenFile("example.csv", os.O_RDWR, os.ModePerm)
 	if csvFileError != nil {
