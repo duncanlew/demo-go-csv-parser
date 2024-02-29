@@ -18,18 +18,10 @@ type Article struct {
 
 func main() {
 	articles := ReadCsv()
-	// TODO extract into separate method
-	var filteredArticles []*Article
-	for _, article := range articles {
-		if article.Location == "inbox" {
-			filteredArticles = append(filteredArticles, article)
-		}
-	}
-
+	filteredArticles := GetInboxArticles(articles)
 	WriteCsv(filteredArticles)
 }
 
-// TODO What is the *. Pointers??
 func ReadCsv() []*Article {
 	csvFile, csvFileError := os.OpenFile("example.csv", os.O_RDWR, os.ModePerm)
 	if csvFileError != nil {
@@ -60,4 +52,14 @@ func WriteCsv(articles []*Article) {
 	if marshalFileError := gocsv.MarshalFile(&articles, resultFile); marshalFileError != nil {
 		panic(marshalFileError)
 	}
+}
+
+func GetInboxArticles(articles []*Article) []*Article {
+	var filteredArticles []*Article
+	for _, article := range articles {
+		if article.Location == "inbox" {
+			filteredArticles = append(filteredArticles, article)
+		}
+	}
+	return filteredArticles
 }
