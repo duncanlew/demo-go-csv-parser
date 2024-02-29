@@ -26,12 +26,7 @@ func main() {
 		}
 	}
 
-	// TODO move the panic into WriteCSV
-	writeCsvError := WriteCsv(filteredArticles)
-	if writeCsvError != nil {
-		panic(writeCsvError)
-	}
-
+	WriteCsv(filteredArticles)
 }
 
 // TODO What is the *. Pointers??
@@ -55,16 +50,14 @@ func ReadCsv() []*Article {
 	return articles
 }
 
-func WriteCsv(articles []*Article) error {
+func WriteCsv(articles []*Article) {
 	resultFile, resultFileError := os.OpenFile("result.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
 	if resultFileError != nil {
-		return resultFileError
+		panic(resultFileError)
 	}
 	defer resultFile.Close()
 
 	if marshalFileError := gocsv.MarshalFile(&articles, resultFile); marshalFileError != nil {
-		return marshalFileError
+		panic(marshalFileError)
 	}
-
-	return nil
 }
