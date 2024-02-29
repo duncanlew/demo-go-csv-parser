@@ -43,7 +43,7 @@ func ReadCsv() []*Article {
 }
 
 func WriteCsv(articles []*Article) {
-	resultFile, resultFileError := os.OpenFile("result.csv", os.O_RDWR|os.O_CREATE, os.ModePerm)
+	resultFile, resultFileError := os.OpenFile("result.csv", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 	if resultFileError != nil {
 		panic(resultFileError)
 	}
