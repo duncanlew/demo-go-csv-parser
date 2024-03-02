@@ -55,7 +55,6 @@ func WriteCsv(articles []*Article) {
 }
 
 func GetInboxArticles(articles []*Article) []*Article {
-	// TODO use go-fp
 	var filteredArticles []*Article
 	for _, article := range articles {
 		if article.Location == "inbox" {
