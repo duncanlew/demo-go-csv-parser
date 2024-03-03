@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/gocarina/gocsv"
-	"log"
 	"os"
 )
 
@@ -32,11 +31,6 @@ func ReadCsv() []*Article {
 	var articles []*Article
 	if unmarshalError := gocsv.UnmarshalFile(csvFile, &articles); unmarshalError != nil {
 		panic(unmarshalError)
-	}
-
-	// TODO: remove this output
-	for _, article := range articles {
-		log.Printf("Title: %s, URL: %s", article.Title, article.URL)
 	}
 
 	return articles
