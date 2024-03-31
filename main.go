@@ -42,12 +42,16 @@ func ReadCsv() []*Article {
 }
 
 func WriteCsv(articles []*Article) {
+	// Open result.csv for writing; create it if it doesn't exist, or overwrite it if it already exists.
 	resultFile, resultFileError := os.OpenFile("result.csv", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+
+	// Check for errors when opening or creating the file. If there's an error, panic.
 	if resultFileError != nil {
 		panic(resultFileError)
 	}
 	defer resultFile.Close()
 
+	// Marshal the articles into the CSV format and write them to the result.csv file
 	if marshalFileError := gocsv.MarshalFile(&articles, resultFile); marshalFileError != nil {
 		panic(marshalFileError)
 	}
