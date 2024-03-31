@@ -54,11 +54,11 @@ func WriteCsv(articles []*Article) {
 }
 
 func GetInboxArticles(articles []*Article) []*Article {
-	var filteredArticles []*Article
+	var inboxArticles []*Article
 	for _, article := range articles {
 		if article.Location == "inbox" {
-			filteredArticles = append(filteredArticles, article)
+			inboxArticles = append(inboxArticles, article)
 		}
 	}
-	return filteredArticles
+	return inboxArticles
 }
