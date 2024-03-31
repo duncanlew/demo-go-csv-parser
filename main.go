@@ -54,11 +54,17 @@ func WriteCsv(articles []*Article) {
 }
 
 func GetInboxArticles(articles []*Article) []*Article {
+	// Initialize an empty slice to store inbox articles
 	var inboxArticles []*Article
+
+	// Iterate through each article in the provided slice.
 	for _, article := range articles {
+		// Check if the article's Location is equal to inbox
 		if article.Location == "inbox" {
+			// If the article's location is inbox, add it to the inboxArticles slice
 			inboxArticles = append(inboxArticles, article)
 		}
 	}
+
 	return inboxArticles
 }
