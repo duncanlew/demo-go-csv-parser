@@ -33,7 +33,7 @@ func ReadCsv() []*Article {
 	defer csvFile.Close()
 
 	var articles []*Article
-	// Parse the CSV data into the articles array. If an error occurs, panic.
+	// Parse the CSV data into the articles slice. If an error occurs, panic.
 	if unmarshalError := gocsv.UnmarshalFile(csvFile, &articles); unmarshalError != nil {
 		panic(unmarshalError)
 	}
