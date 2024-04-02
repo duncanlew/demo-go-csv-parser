@@ -1,0 +1,2 @@
+# A Guide to Parsing CSV Files in Go
+The tutorial for this project can be found on [Medium](https://duncanlew.medium.com/a-guide-to-parsing-csv-files-in-go-992b1636f139) and [dev.to](https://dev.to/duncanlew/a-guide-to-parsing-csv-files-in-go-4lp7).
